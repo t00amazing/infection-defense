@@ -2,7 +2,7 @@
    설정
    ========================================================= */
 // 구글 시트 연동용 Apps Script 웹앱 URL을 배포 후 여기에 넣으세요.
-const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxul7cIt8fBejcKp-Yd-JNq1Trt_ChP3B04Bc5U3crS-Pcd3DsqMv16fiaOxqaqYfYr/exec";
+const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxCCkdIGnwsPyDIUc4eWgiZ31L4RJOWlxBAiuCyd0akM4iJnzjpIH_awrzuzLurXQ0/exec";
 
 /* =========================================================
    1부 장면 데이터
