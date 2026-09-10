@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>방어선은 나에게서 시작된다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===================== 상단 내비게이션 (입장 화면 제외 항상 노출) ===================== -->
+  <div id="top-nav" class="top-nav hidden">
+    <button id="btn-home" class="nav-btn">🏠 처음으로</button>
+    <p id="nav-title" class="nav-title"></p>
+    <button id="btn-back" class="nav-btn">← 뒤로</button>
+  </div>
+
+  <!-- ===================== 입장 화면 ===================== -->
+  <section id="screen-entry" class="screen active">
+    <div class="entry-card">
+      <h1>방어선은<br>나에게서 시작된다</h1>
+      <p class="entry-desc">학교에서 하루를 보내며 감염병 예방 수칙을 선택해보세요.</p>
+      <p class="learning-goal"><strong>학습 목표</strong> 학교생활 속 시나리오를 통해 인플루엔자 예방 지식을 실천적 의사결정 능력으로 전환하고, 개인의 선택이 공동체 건강에 미치는 영향을 성찰한다.</p>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="sel-grade">학년</label>
+          <select id="sel-grade"></select>
+        </div>
+        <div class="field">
+          <label for="sel-class">반</label>
+          <select id="sel-class"></select>
+        </div>
+        <div class="field">
+          <label for="sel-number">번호</label>
+          <select id="sel-number"></select>
+        </div>
+      </div>
+
+      <div class="field field-name">
+        <label for="input-name">이름</label>
+        <input type="text" id="input-name" placeholder="이름을 입력하세요" maxlength="10">
+      </div>
+
+      <button id="btn-start" class="btn-primary btn-block">시작하기</button>
+      <p id="entry-error" class="entry-error"></p>
+
+      <button id="btn-goto-lookup" class="btn-secondary btn-block link-btn">이전에 제출한 내용 조회하기</button>
+    </div>
+  </section>
+
+  <!-- ===================== 1부 장면 화면 ===================== -->
+  <section id="screen-scene" class="screen">
+    <header class="scene-header">
+      <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+      <p id="progress-label" class="progress-label">1 / 9</p>
+    </header>
+
+    <div class="scene-body">
+      <div class="scene-image-wrap">
+        <img id="scene-image" class="scene-image" src="" alt="장면 이미지">
+        <div id="hotspot-layer" class="hotspot-layer"></div>
+      </div>
+      <p id="scene-caption" class="scene-caption"></p>
+
+      <div class="scene-card">
+        <p id="scene-narration" class="scene-narration"></p>
+        <div id="scene-guidance" class="info-note hidden"></div>
+        <div id="scene-info-note" class="info-note hidden"></div>
+        <div id="scene-choices" class="choice-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 손씻기 미니퀴즈 ===================== -->
+  <section id="screen-quiz" class="screen">
+    <header class="scene-header">
+      <p class="quiz-title">올바른 손씻기, 정확히 알고 있나요?</p>
+    </header>
+    <div class="scene-body">
+      <div class="quiz-card">
+        <div class="quiz-q">
+          <p class="quiz-q-label">1. 몇 초 이상 씻어야 할까요?</p>
+          <div id="quiz-time" class="quiz-options"></div>
+        </div>
+        <div class="quiz-q">
+          <p class="quiz-q-label">2. 어떤 물로 씻어야 할까요?</p>
+          <div id="quiz-water" class="quiz-options"></div>
+        </div>
+        <div class="quiz-q">
+          <p class="quiz-q-label">3. 무엇으로 씻어야 할까요?</p>
+          <div id="quiz-soap" class="quiz-options"></div>
+        </div>
+        <div class="quiz-q">
+          <p class="quiz-q-label">4. 꼼꼼히 씻어야 할 부위를 모두 고르세요</p>
+          <div id="quiz-parts" class="quiz-options quiz-options-multi"></div>
+        </div>
+        <button id="btn-quiz-submit" class="btn-primary btn-block">제출하기</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 2부 도입 ===================== -->
+  <section id="screen-part2-intro" class="screen">
+    <div class="intro-card">
+      <p class="eyebrow">다음날</p>
+      <h2>알고보니 독감을 확진 받은 짝꿍</h2>
+      <p id="intro-desc" class="intro-desc"></p>
+
+      <details class="compare-toggle">
+        <summary>감기 vs 독감, 뭐가 다를까?</summary>
+        <table class="compare-table">
+          <thead><tr><th>구분</th><th>감기</th><th>독감(인플루엔자)</th></tr></thead>
+          <tbody>
+            <tr><td>원인 바이러스</td><td>리노바이러스 등 200여 종의 다양한 바이러스</td><td>인플루엔자 바이러스(A·B형이 주로 유행, 매년 항원이 변이함)</td></tr>
+            <tr><td>잠복기</td><td>1~3일</td><td>1~4일(평균 2일)</td></tr>
+            <tr><td>발병 양상</td><td>서서히 시작</td><td>갑작스럽게 시작</td></tr>
+            <tr><td>발열</td><td>미열이거나 없음</td><td>38도 이상 고열이 24~48시간 내 최고조</td></tr>
+            <tr><td>전신 증상</td><td>가벼운 피로감 위주</td><td>두통·근육통·전신 쇠약감이 뚜렷함</td></tr>
+            <tr><td>주요 합병증</td><td>드물게 중이염·부비동염</td><td>세균성 폐렴, 중이염, 심근염, 뇌염·뇌증 등</td></tr>
+            <tr><td>전염 가능 기간</td><td>대체로 3~7일 내 자연 호전</td><td>발병 하루 전부터 발병 후 5~7일까지(소아·청소년은 더 길 수 있음)</td></tr>
+          </tbody>
+        </table>
+      </details>
+
+      <button id="btn-part2-start" class="btn-primary btn-block">대화 열어보기</button>
+    </div>
+  </section>
+
+  <!-- ===================== 2부 채팅 화면 ===================== -->
+  <section id="screen-chat" class="screen">
+    <header class="chat-header">
+      <img src="assets/profile_icon.png" class="chat-avatar" alt="짝꿍">
+      <p class="chat-name">짝꿍</p>
+    </header>
+    <div id="chat-log" class="chat-log"></div>
+    <div id="chat-reply-area" class="chat-reply-area"></div>
+  </section>
+
+  <!-- ===================== 결과 화면 ===================== -->
+  <section id="screen-results" class="screen">
+    <div class="results-wrap">
+
+      <div class="results-header-row">
+        <div>
+          <p id="results-student-tag" class="results-student-tag"></p>
+          <h2 class="results-title">오늘 하루, 나는 어떤 하루를 보냈을까?</h2>
+        </div>
+        <button id="btn-download-metrics" class="btn-small-save">이미지 저장</button>
+      </div>
+
+      <div id="metric-grid" class="metric-grid"></div>
+      <div class="metric-explain">
+        <p><strong>내 방어 게이지</strong> — 1부(등교~하교)에서 내가 실천한 예방 행동을 종합한 지표예요. 손씻기, 마스크, 환기, 소독처럼 나 자신을 감염으로부터 지킨 정도를 보여줘요.</p>
+        <p><strong>학급 감염병 전파율</strong> — 내 선택이 우리 반 전체의 확산 위험에 미친 영향을 보여주는 지표예요. 학급 인원을 30명으로 가정했을 때 몇 명에게 감염이 전파됐을지 추정한 수치도 함께 보여줘요. 나를 지키는 것뿐 아니라, 환기·소독처럼 주변으로 옮기지 않도록 한 행동과, 아픈 친구가 빨리 보건실이나 병원의 도움을 받도록 안내한 행동까지 함께 반영돼요.</p>
+        <p><strong>짝꿍 도움 배지</strong> — 2부에서 독감에 걸린 짝꿍에게 얼마나 정확하고 도움이 되는 조언을 해줬는지 보여주는 지표예요.</p>
+      </div>
+
+      <h3 class="section-heading">내 선택 되짚어보기</h3>
+      <div id="review-list" class="review-list"></div>
+
+      <h3 class="section-heading">나만의 감염병 예방 수칙 정리</h3>
+      <p class="section-sub">오늘 배운 내용을 개조식(글머리 기호)으로 자유롭게 정리해보세요.</p>
+      <button id="btn-toggle-hint" class="hint-btn" type="button">힌트 보기</button>
+      <div id="hint-panel" class="hint-panel hidden">
+        <p>• 급식 시간에 손을 씻을 때, 나는 어떤 점에 특히 신경 썼거나 놓쳤나요?</p>
+        <p>• 짝꿍이 기침할 때 어떤 방식이 더 안전하다고 느꼈나요?</p>
+        <p>• 마스크 종류를 고를 때 나는 무엇을 기준으로 선택했나요?</p>
+        <p>• 냉난방기가 켜져 있어도 창문을 열어야 했던 이유는 무엇이었나요?</p>
+        <p>• 떡볶이를 함께 먹을지 고민했던 순간, 나는 어떤 판단을 내렸나요?</p>
+        <p>• 짝꿍의 증상 중 무엇을 보고 '그냥 감기가 아닐 수도 있겠다'고 생각했나요?</p>
+        <p>• 짝꿍에게 처방약이나 등교 시기에 대해 조언해줬던 내용을 떠올려보세요.</p>
+      </div>
+      <div class="field">
+        <textarea id="input-summary" rows="7" placeholder="예)&#10;• 손은 흐르는 물에 비누로 30초 이상 씻는다&#10;• 기침할 땐 옷소매로 가린다&#10;• ..."></textarea>
+      </div>
+
+      <h3 class="section-heading">오늘의 소감 &amp; 앞으로의 다짐</h3>
+      <div class="field">
+        <label for="input-feeling">오늘의 소감</label>
+        <textarea id="input-feeling" rows="3" placeholder="오늘 게임을 하면서 느낀 점을 자유롭게 적어보세요"></textarea>
+      </div>
+      <div class="field">
+        <label for="input-pledge">앞으로의 다짐</label>
+        <textarea id="input-pledge" rows="3" placeholder="앞으로 실천하고 싶은 다짐을 적어보세요"></textarea>
+      </div>
+
+      <div class="final-banner">
+        30초 이상 올바른 손씻기만으로도 인플루엔자를 비롯한 대부분의 감염병을 약 50~70% 예방할 수 있어요.
+      </div>
+
+      <button id="btn-submit" class="btn-primary btn-block">완료하고 제출하기</button>
+      <p id="submit-status" class="submit-status"></p>
+
+      <div id="postgame-actions" class="postgame-actions hidden">
+        <button id="btn-download-postit" class="btn-secondary btn-block">나만의 예방 수칙 포스트잇으로 저장</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== 조회 화면 ===================== -->
+  <section id="screen-lookup" class="screen">
+    <div class="results-wrap">
+      <h2 class="results-title">제출한 내용 조회하기</h2>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="lk-grade">학년</label>
+          <select id="lk-grade"></select>
+        </div>
+        <div class="field">
+          <label for="lk-class">반</label>
+          <select id="lk-class"></select>
+        </div>
+        <div class="field">
+          <label for="lk-number">번호</label>
+          <select id="lk-number"></select>
+        </div>
+      </div>
+      <div class="field field-name">
+        <label for="lk-name">이름</label>
+        <input type="text" id="lk-name" placeholder="이름을 입력하세요" maxlength="10">
+      </div>
+      <button id="btn-lookup-self" class="btn-primary btn-block">내 결과 조회하기</button>
+      <p id="lookup-status" class="submit-status"></p>
+
+      <div id="lookup-result" class="lookup-result hidden"></div>
+      <button id="btn-download-lookup" class="btn-secondary btn-block hidden">발표자료용 이미지로 저장</button>
+
+      <hr class="divider">
+
+      <h3 class="section-heading">다른 친구들의 예방 수칙 둘러보기</h3>
+      <p class="section-sub">누가 작성했는지는 표시되지 않아요.</p>
+      <button id="btn-browse" class="btn-secondary btn-block">둘러보기</button>
+      <div id="browse-list" class="browse-list"></div>
+    </div>
+  </section>
+
+  <!-- ===================== 팝업 모달 ===================== -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div id="modal-box" class="modal-box">
+      <button id="modal-close" class="modal-close">닫기</button>
+      <div id="modal-content" class="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- 이미지 캡처용 오프스크린 영역 -->
+  <div id="postit-render" class="postit-render"></div>
+  <div id="metrics-render" class="postit-render"></div>
+  <div id="lookup-render" class="postit-render"></div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
